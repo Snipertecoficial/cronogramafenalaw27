@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f3f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f151b" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Rota Areis na FENALAW</title>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: guia de bolso, uma coluna no celular; linha do tempo + cartões de stand com check */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --ink:#17212b; --muted:#5b6876; --line:#d9dfe5;
+  --accent:#0d5c73; --accent-soft:#e0eef2; --juri:#a8590b; --juri-soft:#fbeedd;
+  --free:#2f6f3e; --free-soft:#e3f1e6; --paid:#5a4a8a; --paid-soft:#ece8f6;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Source Sans 3",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151b; --surface:#17202a; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --accent:#5fb6cf; --accent-soft:#16323c; --juri:#f0a85a; --juri-soft:#3a2814;
+  --free:#7cc98c; --free-soft:#183021; --paid:#b3a4e8; --paid-soft:#272240; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151b; --surface:#17202a; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --accent:#5fb6cf; --accent-soft:#16323c; --juri:#f0a85a; --juri-soft:#3a2814;
+  --free:#7cc98c; --free-soft:#183021; --paid:#b3a4e8; --paid-soft:#272240; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:760px;margin:0 auto;padding-block:20px 56px;display:grid;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:1.9rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.25rem;font-weight:700;display:flex;gap:10px;align-items:baseline}
+h3{font-size:1.02rem;font-weight:700}
+p{margin:0}
+.eyebrow{font:500 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lead{color:var(--muted);max-width:62ch}
+header{display:grid;gap:8px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.9rem;color:var(--muted)}
+.facts b{color:var(--ink);font-weight:600}
+section{display:grid;gap:12px}
+.count{font:500 .8rem var(--f-mono);color:var(--muted)}
+/* lacunas */
+.gaps{display:grid;gap:8px}
+.gap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:4px}
+.gap .now{font-size:.9rem;color:var(--muted)}
+.gap .who{font-size:.9rem}
+/* chips */
+.chip{display:inline-block;font:600 .7rem var(--f-body);letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.c-free{background:var(--free-soft);color:var(--free)}
+.c-paid{background:var(--paid-soft);color:var(--paid)}
+.c-juri{background:var(--juri-soft);color:var(--juri)}
+.c-tier{background:var(--accent-soft);color:var(--accent)}
+/* linha do tempo */
+.tl{list-style:none;margin:0;padding:0;display:grid}
+.tl li{display:grid;grid-template-columns:4.6rem 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0}
+.t{font:500 .82rem var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted);padding-top:2px}
+.tl .body{display:grid;gap:3px;min-width:0}
+.tl .where{font-size:.88rem;color:var(--muted)}
+.tl .why{font-size:.92rem}
+.tl li.juri .t{color:var(--juri)}
+.tl li.juri h3{color:var(--juri)}
+.tl li.past{opacity:.45}
+.tl li.current{background:var(--accent-soft);border-radius:8px;padding-inline:8px;margin-inline:-8px;border-top-color:transparent}
+.tl li.current .t::after{content:"agora";display:block;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-top:2px}
+.alt{font-size:.88rem;color:var(--muted);border-left:2px solid var(--line);padding-left:8px}
+/* stands */
+.stands{display:grid;gap:10px}
+.stand{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:6px}
+.stand.done{opacity:.55}
+.stand-top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.stand-top>div{min-width:0;display:grid;gap:4px}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.stand p{font-size:.94rem}
+.ask{font-size:.9rem;color:var(--muted)}
+.ask b{color:var(--ink);font-weight:600}
+.check{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted);cursor:pointer;flex-shrink:0;padding:4px 0}
+.check input{width:20px;height:20px;accent-color:var(--accent);margin:0}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+details summary{cursor:pointer;font:700 1rem var(--f-display)}
+details[open] summary{margin-bottom:8px}
+details ul{margin:0;padding-left:1.1rem;display:grid;gap:4px;font-size:.94rem}
+ol.qs{margin:0;padding-left:1.3rem;display:grid;gap:6px}
+ol.qs li{padding-left:2px}
+.note{font-size:.85rem;color:var(--muted)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (min-width:640px){h1{font-size:2.3rem}.gaps{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">Quinta, 29 de outubro · último dia</span>
+  <h1>Rota Areis na FENALAW</h1>
+  <p class="lead">O que ver e quem procurar hoje para trazer API e ideias ao Areis. Cruzei a programação do dia com a lista oficial de expositores e com o que falta no sistema.</p>
+  <div class="facts"><span>Transamerica Expo · Santo Amaro</span><span>Feira até <b>20h</b></span><span>Congresso até <b>18h30</b></span></div>
+</header>
+
+<section>
+  <h2>Onde o Areis tem lacuna</h2>
+  <div class="gaps">
+    <div class="gap"><h3>Jurimetria</h3><p class="now">Hoje não existe. O processo tem tribunal, classe e valor, mas não há chance de êxito nem tempo médio.</p><p class="who">Procure <b>Predictus</b>, <b>Data Lawyer</b>, <b>Finch</b>, <b>JUDIT</b></p></div>
+    <div class="gap"><h3>Monitoramento e prazos</h3><p class="now">DataJud é lento e não busca por OAB. Jusbrasil e Intima.AI estão desligados. Alerta de prazo depende de lembrete manual.</p><p class="who">Procure <b>JUDIT</b>, <b>Escavador</b>, <b>Kurier</b>, <b>iPrazos</b>, <b>Jusbrasil</b></p></div>
+    <div class="gap"><h3>Assinatura de contrato</h3><p class="now">O contrato só guarda o status da assinatura, digitado à mão. Não há envio nem retorno automático.</p><p class="who">Procure <b>ZapSign</b>, <b>Clicksign</b>, <b>Docusign</b></p></div>
+    <div class="gap"><h3>Cálculo e dados de partes</h3><p class="now">Não há cálculo judicial nem enriquecimento de CPF/CNPJ no cadastro de cliente e parte contrária.</p><p class="who">Procure <b>Bernhoeft</b>, <b>Kmax</b>, <b>Target Data</b>, <b>Kronoos</b></p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Jurimetria hoje <span class="count">5 sessões</span></h2>
+  <p class="lead">Livre: Fenatalks, aberto a visitante. Congresso: exige credencial de congressista.</p>
+  <ol class="tl" id="juri">
+    <li class="juri" data-s="11:00" data-e="11:20"><span class="t">11h00</span><div class="body"><h3>Jurimetria que conecta jurídico, estratégia e consumidor</h3><span class="where">Finch + Britânia · Palco Fenatalks 360 <span class="chip c-free">Livre</span></span></div></li>
+    <li class="juri" data-s="12:20" data-e="12:40"><span class="t">12h20</span><div class="body"><h3>Da leitura dos atos processuais à inteligência: controladoria e jurimetria em grande escala</h3><span class="where">Consult Expres + Valença · Auditório 05 <span class="chip c-paid">Congresso</span></span></div></li>
+    <li class="juri" data-s="14:20" data-e="14:40"><span class="t">14h20</span><div class="body"><h3>O fim da advocacia baseada em opinião: dados para vencer processos</h3><span class="where">Data Lawyer · Fenatalks Inovação <span class="chip c-free">Livre</span></span></div></li>
+    <li class="juri" data-s="14:30" data-e="15:00"><span class="t">14h30</span><div class="body"><h3>Petrobras: o maior desafio da jurimetria não é o modelo, é a qualidade dos dados</h3><span class="where">Auditório 01 <span class="chip c-paid">Congresso</span></span><span class="why">A mais útil para nós: os dados que viriam do DataJud e da AASP têm exatamente esse problema.</span></div></li>
+    <li class="juri" data-s="15:40" data-e="16:00"><span class="t">15h40</span><div class="body"><h3>De semanas a horas: 28 mil processos e mais de 60 sistemas</h3><span class="where">Predictus + M3BS · Auditório 06 <span class="chip c-paid">Congresso</span></span></div></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Roteiro do dia</h2>
+  <p class="lead">O item em destaque acompanha o relógio. Entre as palestras, os stands.</p>
+  <ol class="tl" id="rota">
+    <li data-s="10:00" data-e="11:00"><span class="t">10h30</span><div class="body"><h3>Stands de API, enquanto a feira está vazia</h3><span class="why">Predictus, JUDIT e Escavador. Peça link da documentação, sandbox e um contato técnico.</span></div></li>
+    <li class="juri" data-s="11:00" data-e="11:20"><span class="t">11h00</span><div class="body"><h3>Finch: jurimetria e experiência do consumidor</h3><span class="where">Palco Fenatalks 360 <span class="chip c-free">Livre</span></span></div></li>
+    <li data-s="11:20" data-e="12:20"><span class="t">11h20</span><div class="body"><h3>Jusbrasil, AASP e ZapSign</h3><span class="why">Jusbrasil e AASP já estão no código. A conversa é preço e o que vem pela frente. Na ZapSign, a API de assinatura.</span></div></li>
+    <li class="juri" data-s="12:20" data-e="12:40"><span class="t">12h20</span><div class="body"><h3>Consult Expres: controladoria e jurimetria</h3><span class="where">Auditório 05 <span class="chip c-paid">Congresso</span></span><p class="alt">Sem credencial de congresso: fique nos stands até 12h40.</p></div></li>
+    <li data-s="12:40" data-e="13:00"><span class="t">12h40</span><div class="body"><h3>ZapSign: identidade digital e Open Gateway</h3><span class="where">Fenatalks Inovação <span class="chip c-free">Livre</span></span></div></li>
+    <li data-s="13:00" data-e="14:20"><span class="t">13h00</span><div class="body"><h3>Almoço e segunda leva de stands</h3><span class="why">Kurier, iPrazos, Advise, Target Data, Bernhoeft.</span></div></li>
+    <li class="juri" data-s="14:20" data-e="15:00"><span class="t">14h20</span><div class="body"><h3>Escolha uma: Data Lawyer (14h20) ou Petrobras (14h30)</h3><span class="where">Inovação <span class="chip c-free">Livre</span> · Auditório 01 <span class="chip c-paid">Congresso</span></span><span class="why">Com credencial de congresso, vá na Petrobras e passe no stand da Data Lawyer depois. Sem credencial, vá na Data Lawyer.</span></div></li>
+    <li data-s="15:00" data-e="15:40"><span class="t">15h00</span><div class="body"><h3>Data Lawyer, Finch e JUDIT</h3><span class="why">Volte com o que ouviu na palestra e pergunte de API e preço por processo.</span></div></li>
+    <li class="juri" data-s="15:40" data-e="16:00"><span class="t">15h40</span><div class="body"><h3>Predictus: 28 mil processos, 60 sistemas</h3><span class="where">Auditório 06 <span class="chip c-paid">Congresso</span></span><p class="alt">Alternativa livre: 15h20, Projuris e Advocacia por Conversa (automação por WhatsApp), no Fenatalks Inovação.</p></div></li>
+    <li data-s="16:00" data-e="16:30"><span class="t">16h00</span><div class="body"><h3>Concorrentes</h3><span class="why">Projuris, Aurum, Legal Manager, Vios, SGJUR. Veja o que vendem como diferencial e quanto cobram.</span></div></li>
+    <li data-s="16:30" data-e="17:00"><span class="t">16h30</span><div class="body"><h3>Corejur: agentes de IA cortaram 80% da controladoria</h3><span class="where">Auditório 02 <span class="chip c-paid">Congresso</span></span><p class="alt">Às 17h00 tem demo dos mesmos agentes no Fenatalks Inovação <span class="chip c-free">Livre</span></p></div></li>
+    <li data-s="17:00" data-e="17:20"><span class="t">17h00</span><div class="body"><h3>Corejur: demo dos agentes</h3><span class="where">Fenatalks Inovação <span class="chip c-free">Livre</span></span></div></li>
+    <li data-s="17:20" data-e="17:40"><span class="t">17h20</span><div class="body"><h3>Pact: gestão financeira processual</h3><span class="where">Fenatalks Inovação <span class="chip c-free">Livre</span></span><span class="why">Depósitos e alvarás que viram caixa. Encaixa no módulo Financeiro.</span></div></li>
+    <li data-s="17:40" data-e="20:00"><span class="t">17h40</span><div class="body"><h3>Volta aos stands que ficaram</h3><span class="why">A feira vai até 20h e no fim do último dia os comerciais têm mais tempo.</span></div></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Stands prioritários <span class="count" id="cnt"></span></h2>
+  <p class="note">O site oficial não publica o número do stand. Confira na planta da entrada. Patrocinadores Elite e Diamante têm os stands maiores.</p>
+  <div class="stands" id="stands">
+    <div class="stand" data-id="predictus"><div class="stand-top"><div><h3>Predictus</h3><div class="tags"><span class="chip c-tier">A</span><span class="chip c-juri">Jurimetria</span><span class="chip c-tier">Ouro</span></div></div><label class="check"><input type="checkbox" id="ck-predictus">Visitei</label></div>
+      <p>API com módulo de jurimetria: chance de ganhar, ganhar em parte, perder ou fazer acordo, além de tempo e valor médios, por número de processo ou por tema.</p>
+      <p class="ask"><b>No Areis:</b> um card "chance de êxito" na tela do processo. <b>Pergunte:</b> preço por consulta e se a consulta por tema dispensa o número.</p></div>
+    <div class="stand" data-id="judit"><div class="stand-top"><div><h3>JUDIT</h3><div class="tags"><span class="chip c-tier">A</span><span class="chip c-tier">Bronze</span></div></div><label class="check"><input type="checkbox" id="ck-judit">Visitei</label></div>
+      <p>API de consulta por CPF, CNPJ ou número do processo, monitoramento com webhook e download dos autos.</p>
+      <p class="ask"><b>No Areis:</b> complementa o DataJud, que é lento e não busca por OAB, e pode disparar o alerta de prazo sozinho. <b>Pergunte:</b> busca por OAB, processos em segredo de justiça e preço por processo monitorado.</p></div>
+    <div class="stand" data-id="escavador"><div class="stand-top"><div><h3>Escavador</h3><div class="tags"><span class="chip c-tier">A</span><span class="chip c-tier">Bronze</span></div></div><label class="check"><input type="checkbox" id="ck-escavador">Visitei</label></div>
+      <p>API v2 com robôs nos tribunais e busca em diários, e monitoramento por webhook.</p>
+      <p class="ask"><b>No Areis:</b> a mesma vaga da JUDIT. Leve as duas cotações e compare. <b>Pergunte:</b> preço por chamada de API, que não aparece no site.</p></div>
+    <div class="stand" data-id="datalawyer"><div class="stand-top"><div><h3>Data Lawyer</h3><div class="tags"><span class="chip c-tier">A</span><span class="chip c-juri">Jurimetria</span><span class="chip c-tier">Ouro</span></div></div><label class="check"><input type="checkbox" id="ck-datalawyer">Visitei</label></div>
+      <p>Jurimetria e inteligência de mercado. Não encontrei documentação pública de API.</p>
+      <p class="ask"><b>Pergunte primeiro:</b> se tem API ou só painel. Se for só painel, serve de referência de tela, não de integração.</p></div>
+    <div class="stand" data-id="zapsign"><div class="stand-top"><div><h3>ZapSign</h3><div class="tags"><span class="chip c-tier">A</span><span class="chip c-tier">Ouro</span></div></div><label class="check"><input type="checkbox" id="ck-zapsign">Visitei</label></div>
+      <p>Assinatura eletrônica brasileira com API e webhook. Clicksign (Prata) e Docusign (Diamante) são as alternativas.</p>
+      <p class="ask"><b>No Areis:</b> o contrato vai para assinatura com um clique e o status se atualiza sozinho. <b>Pergunte:</b> preço por envelope e plano para software que atende vários escritórios.</p></div>
+    <div class="stand" data-id="jusbrasil"><div class="stand-top"><div><h3>Jusbrasil</h3><div class="tags"><span class="chip c-tier">A</span><span class="chip c-tier">Elite</span></div></div><label class="check"><input type="checkbox" id="ck-jusbrasil">Visitei</label></div>
+      <p>O cliente de intimações (via Digesto) já está no código, desligado. Hoje lançam o Dossiê da parte contrária (14h00) e cálculos trabalhistas.</p>
+      <p class="ask"><b>Pergunte:</b> preço atual da API de intimações e se Dossiê e cálculos saem por API.</p></div>
+    <div class="stand" data-id="aasp"><div class="stand-top"><div><h3>AASP</h3><div class="tags"><span class="chip c-tier">A</span><span class="chip c-tier">Diamante</span></div></div><label class="check"><input type="checkbox" id="ck-aasp">Visitei</label></div>
+      <p>Já é a fonte principal de publicações do Areis.</p>
+      <p class="ask"><b>Pergunte:</b> se vão ter webhook no lugar da consulta por data, intimações de portal e um prazo de guarda maior que 1 ano. Peça um contato técnico: o Swagger deles vem sem campos.</p></div>
+    <div class="stand" data-id="finch"><div class="stand-top"><div><h3>Finch</h3><div class="tags"><span class="chip c-tier">B</span><span class="chip c-juri">Jurimetria</span><span class="chip c-tier">Diamante</span></div></div><label class="check"><input type="checkbox" id="ck-finch">Visitei</label></div>
+      <p>Legal Ops e jurimetria para grande volume. Mais referência de produto do que fornecedor para o nosso porte.</p></div>
+    <div class="stand" data-id="kurier"><div class="stand-top"><div><h3>Kurier, iPrazos e Advise</h3><div class="tags"><span class="chip c-tier">B</span><span class="chip c-tier">Ouro</span></div></div><label class="check"><input type="checkbox" id="ck-kurier">Visitei</label></div>
+      <p>Publicações, distribuição e prazo lido por IA. Servem de plano B à AASP e de referência para o cálculo automático de prazo.</p></div>
+    <div class="stand" data-id="calc"><div class="stand-top"><div><h3>Bernhoeft e Kmax</h3><div class="tags"><span class="chip c-tier">B</span></div></div><label class="check"><input type="checkbox" id="ck-calc">Visitei</label></div>
+      <p>Cálculos judiciais e provisão trabalhista. <b>Pergunte</b> se recebem pedido e devolvem o cálculo por API.</p></div>
+    <div class="stand" data-id="dados"><div class="stand-top"><div><h3>Target Data, Kronoos e Uplexis</h3><div class="tags"><span class="chip c-tier">B</span></div></div><label class="check"><input type="checkbox" id="ck-dados">Visitei</label></div>
+      <p>Enriquecimento e due diligence por CPF/CNPJ. Preencheria o cadastro de contato e evitaria cliente duplicado com grafia diferente.</p></div>
+    <div class="stand" data-id="corejur"><div class="stand-top"><div><h3>Corejur</h3><div class="tags"><span class="chip c-tier">B</span><span class="chip c-tier">Ouro</span></div></div><label class="check"><input type="checkbox" id="ck-corejur">Visitei</label></div>
+      <p>Agentes de IA para controladoria. Veja quais tarefas os agentes fazem sozinhos: é a lista de ideias para o nosso módulo de Automações.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Perguntas para todo stand de API</h2>
+  <ol class="qs">
+    <li>Tem API REST documentada? Peça o link e um acesso de teste (sandbox).</li>
+    <li>Avisa por webhook ou eu preciso consultar de tempos em tempos?</li>
+    <li>Como cobra: por consulta, por processo monitorado ou mensalidade? Tem plano para software que revende a vários escritórios?</li>
+    <li>Quais tribunais e sistemas cobre (PJe, eSAJ, eproc, projudi)? Pega segredo de justiça?</li>
+    <li>Quanto tempo leva da movimentação no tribunal até chegar na API? Qual o limite de requisições?</li>
+    <li>LGPD: tem contrato de tratamento de dados (DPA)? Onde ficam os dados e por quanto tempo?</li>
+    <li>Quem é o contato técnico? Peça o nome, não só o do comercial.</li>
+  </ol>
+  <p class="note">Encaixe no Areis: cada escritório cadastra a própria chave em Admin &gt; API, o mesmo caminho que a AASP já usa. Fornecedor que só aceita uma chave da plataforma inteira dá mais trabalho.</p>
+</section>
+
+<section>
+  <h2>Ideias para trazer, sem fornecedor</h2>
+  <details open><summary>Jurimetria caseira com o DataJud</summary>
+    <ul>
+      <li>O DataJud já devolve classe, assunto, órgão julgador e as movimentações com data, de graça.</li>
+      <li>Com isso dá para calcular o tempo médio até a sentença por vara e por classe, com a carteira do próprio escritório.</li>
+      <li>A chance de êxito exige classificar o resultado de cada processo. Essa é a parte que a Predictus vende pronta.</li>
+    </ul></details>
+  <details><summary>Rentabilidade por contrato</summary>
+    <ul>
+      <li>O auditório PME passa a tarde em precificação de honorários e margem por contrato.</li>
+      <li>O Areis já tem timesheet, contratos e financeiro. Cruzar horas lançadas com honorário recebido dá a margem de cada contrato.</li>
+    </ul></details>
+  <details><summary>Reforma tributária nos honorários</summary>
+    <ul>
+      <li>O Grupo Studio passa o dia no stand falando de IBS, CBS e split payment na advocacia.</li>
+      <li>Vale ver se o faturamento do Areis vai precisar destacar os novos tributos em 2027.</li>
+    </ul></details>
+</section>
+
+<p class="note">Fontes: programação FENALAW 2026 (atualizada em 28/10, 19h47) e lista oficial de expositores em fenalaw.com.br. O que o Areis já faz vem do código do projeto.</p>
+</div>
+
+<script>
+(function(){
+  function nowMin(){
+    try{var p=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).split(':');return +p[0]*60+ +p[1];}
+    catch(e){var d=new Date();return d.getHours()*60+d.getMinutes();}
+  }
+  function toMin(s){var p=s.split(':');return +p[0]*60+ +p[1];}
+  function mark(){
+    var n=nowMin();
+    document.querySelectorAll('.tl li[data-s]').forEach(function(li){
+      var s=toMin(li.dataset.s),e=toMin(li.dataset.e);
+      li.classList.toggle('past',n>=e);
+      li.classList.toggle('current',n>=s&&n<e);
+    });
+  }
+  mark();setInterval(mark,60000);
+
+  var KEY='rota-fenalaw-visitados',seen={};
+  try{seen=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+  var boxes=document.querySelectorAll('.stand input[type=checkbox]');
+  function count(){
+    var d=0;boxes.forEach(function(b){if(b.checked)d++;});
+    document.getElementById('cnt').textContent=d+' de '+boxes.length+' visitados';
+  }
+  boxes.forEach(function(b){
+    var card=b.closest('.stand'),id=card.dataset.id;
+    b.checked=!!seen[id];card.classList.toggle('done',b.checked);
+    b.addEventListener('change',function(){
+      seen[id]=b.checked;card.classList.toggle('done',b.checked);count();
+      try{localStorage.setItem(KEY,JSON.stringify(seen));}catch(e){}
+    });
+  });
+  count();
+})();
+</script>
+
+</body>
+</html>
